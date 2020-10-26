@@ -56,7 +56,8 @@ public class RdwsyncApplication implements CommandLineRunner {
 											ResponseEntity<String> response = RdwRequestData.getData(kenteken);
 											if (response.getStatusCode() == HttpStatus.OK) {
 												RdwResponse[] voertuigen = Converter.fromJsonString(response.getBody());
-												System.out.println(response.getBody());
+												System.out.println("Aantal gevonden: " + voertuigen.length
+														+ " met zoekvraag: " + kenteken);
 												for (final RdwResponse voertuig : voertuigen) {
 													String jsonString = new JSONObject()
 															.put("Kenteken", voertuig.getKenteken())
