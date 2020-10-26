@@ -61,6 +61,12 @@ public class RdwResponse {
     private String europeseUitvoeringcategorieToevoeging;
     private String typeGasinstallatie;
     private String laadvermogen;
+    private String maximaleConstructiesnelheidBromSnorfiets;
+    private String vermogenBromSnorfiets;
+    private String opleggerGeremd;
+    private String vervaldatumTachograaf;
+    private String aanhangwagenAutonoomGeremd;
+    private String aanhangwagenMiddenasGeremd;
 
     @JsonProperty("kenteken")
     public String getKenteken() {
@@ -80,6 +86,66 @@ public class RdwResponse {
     @JsonProperty("aantal_cilinders")
     public void setAantalCilinders(String value) {
         this.aantalCilinders = value;
+    }
+
+    @JsonProperty("aanhangwagen_middenas_geremd")
+    public String getAanhangwagenMiddenasGeremd() {
+        return aanhangwagenMiddenasGeremd;
+    }
+
+    @JsonProperty("aanhangwagen_middenas_geremd")
+    public void setAanhangwagenMiddenasGeremd(String value) {
+        this.aanhangwagenMiddenasGeremd = value;
+    }
+
+    @JsonProperty("aanhangwagen_autonoom_geremd")
+    public String getAanhangwagenAutonoomGeremd() {
+        return aanhangwagenAutonoomGeremd;
+    }
+
+    @JsonProperty("aanhangwagen_autonoom_geremd")
+    public void setAanhangwagenAutonoomGeremd(String value) {
+        this.aanhangwagenAutonoomGeremd = value;
+    }
+
+    @JsonProperty("vervaldatum_tachograaf")
+    public String getVervaldatumTachograaf() {
+        return vervaldatumTachograaf;
+    }
+
+    @JsonProperty("vervaldatum_tachograaf")
+    public void setVervaldatumTachograaf(String value) {
+        this.vervaldatumTachograaf = value;
+    }
+
+    @JsonProperty("maximale_constructiesnelheid_brom_snorfiets")
+    public String getMaximaleConstructiesnelheidBromSnorfiets() {
+        return maximaleConstructiesnelheidBromSnorfiets;
+    }
+
+    @JsonProperty("maximale_constructiesnelheid_brom_snorfiets")
+    public void setMaximaleConstructiesnelheidBromSnorfiets(String value) {
+        this.maximaleConstructiesnelheidBromSnorfiets = value;
+    }
+
+    @JsonProperty("vermogen_brom_snorfiets")
+    public String getVermogenBromSnorfiets() {
+        return vermogenBromSnorfiets;
+    }
+
+    @JsonProperty("vermogen_brom_snorfiets")
+    public void setVermogenBromSnorfiets(String value) {
+        this.vermogenBromSnorfiets = value;
+    }
+
+    @JsonProperty("oplegger_geremd")
+    public String getOpleggerGeremd() {
+        return opleggerGeremd;
+    }
+
+    @JsonProperty("oplegger_geremd")
+    public void setOpleggerGeremd(String value) {
+        this.opleggerGeremd = value;
     }
 
     @JsonProperty("laadvermogen")

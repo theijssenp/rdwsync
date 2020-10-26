@@ -32,17 +32,25 @@ public class RdwsyncApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		String startPlate = this.getStartplate();
+		Boolean startPoint1 = false;
+		Boolean startPoint2 = false;
+		Boolean startPoint3 = false;
+		Boolean startPoint4 = false;
 		List<String> letterLijst = ListCreator.getList();
 		System.out.println("Start Plate: " + startPlate);
 		for (String deel1 : letterLijst) {
-			if (deel1.equalsIgnoreCase(startPlate.substring(0, 1))) {
+			if (startPoint1 | deel1.equalsIgnoreCase(startPlate.substring(0, 1))) {
+				startPoint1 = true;
 				for (String deel2 : letterLijst) {
-					if (deel2.equalsIgnoreCase(startPlate.substring(1, 2))) {
+					if (startPoint2 | deel2.equalsIgnoreCase(startPlate.substring(1, 2))) {
+						startPoint2 = true;
 						for (String deel3 : letterLijst) {
-							if (deel3.equalsIgnoreCase(startPlate.substring(2, 3))) {
+							if (startPoint3 | deel3.equalsIgnoreCase(startPlate.substring(2, 3))) {
+								startPoint3 = true;
 								for (String deel4 : letterLijst) {
-									for (String deel5 : letterLijst) {
-										String kenteken = deel1 + deel2 + deel3 + deel4 + deel5 + "%";
+									if (startPoint4 | deel4.equalsIgnoreCase(startPlate.substring(3, 4))) {
+										startPoint4 = true;
+										String kenteken = deel1 + deel2 + deel3 + deel4 + "%";
 										if (DutchLicensePlateFormatChecker.matchValid(kenteken)) {
 											System.out.println("Zoek string naar RDW: " + kenteken);
 											ResponseEntity<String> response = RdwRequestData.getData(kenteken);
