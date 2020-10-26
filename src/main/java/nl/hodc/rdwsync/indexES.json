@@ -1,0 +1,51 @@
+{
+    "rdw": {
+        "settings": {
+            "index": {
+                "number_of_shards": "5",
+                "blocks": {
+                    "read_only_allow_delete": "false"
+                },
+                "provided_name": "rdw",
+                "creation_date": "1550561491046",
+                "analysis": {
+                    "filter": {
+                        "KentekenFilter": {
+                            "type": "edge_ngram",
+                            "min_gram": "1",
+                            "max_gram": "20"
+                        },
+                        "MessageFilter": {
+                            "type": "edge_ngram",
+                            "min_gram": "1",
+                            "max_gram": "20"
+                        }
+                    },
+                    "analyzer": {
+                        "KentekenAnalyzer": {
+                            "filter": [
+                                "lowercase",
+                                "KentekenFilter"
+                            ],
+                            "type": "custom",
+                            "tokenizer": "standard"
+                        },
+                        "MessageAnalyzer": {
+                            "filter": [
+                                "lowercase",
+                                "MessageFilter"
+                            ],
+                            "type": "custom",
+                            "tokenizer": "standard"
+                        }
+                    }
+                },
+                "number_of_replicas": "1",
+                "uuid": "bylYvx17T5KN4E-yDkmXRA",
+                "version": {
+                    "created": "6060099"
+                }
+            }
+        }
+    }
+}
