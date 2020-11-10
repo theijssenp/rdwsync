@@ -67,6 +67,7 @@ public class RdwResponse {
     private String vervaldatumTachograaf;
     private String aanhangwagenAutonoomGeremd;
     private String aanhangwagenMiddenasGeremd;
+    private String aantalStaanplaatsen;
 
     @JsonProperty("kenteken")
     public String getKenteken() {
@@ -86,6 +87,16 @@ public class RdwResponse {
     @JsonProperty("aantal_cilinders")
     public void setAantalCilinders(String value) {
         this.aantalCilinders = value;
+    }
+
+    @JsonProperty("aantal_staanplaatsen")
+    public String getAantalStaanplaatsen() {
+        return aantalStaanplaatsen;
+    }
+
+    @JsonProperty("aantal_staanplaatsen")
+    public void setAantalStaanplaatsen(String value) {
+        this.aantalStaanplaatsen = value;
     }
 
     @JsonProperty("aanhangwagen_middenas_geremd")

@@ -25,6 +25,10 @@ public class RdwsyncApplication implements CommandLineRunner {
 		return myAppProperties.getStartplate();
 	}
 
+	public void setStartplate(String kenteken) {
+		myAppProperties.setStartplate(kenteken);
+	}
+
 	@GetMapping("/uitsluiten")
 	public String getUitsluiten() {
 		return myAppProperties.getUitsluiten();
@@ -44,47 +48,53 @@ public class RdwsyncApplication implements CommandLineRunner {
 		List<String> letterLijst = ListCreator.getList(this.getUitsluiten());
 		System.out.println("Start Plate: " + startPlate);
 		for (String deel1 : letterLijst) {
-			if (startPoint1 | deel1.equalsIgnoreCase(startPlate.substring(0, 1))) {
-				startPoint1 = true;
-				for (String deel2 : letterLijst) {
-					if (startPoint2 | deel2.equalsIgnoreCase(startPlate.substring(1, 2))) {
-						startPoint2 = true;
-						for (String deel3 : letterLijst) {
-							if (startPoint3 | deel3.equalsIgnoreCase(startPlate.substring(2, 3))) {
-								startPoint3 = true;
-								for (String deel4 : letterLijst) {
-									if (startPoint4 | deel4.equalsIgnoreCase(startPlate.substring(3, 4))) {
-										startPoint4 = true;
-										String kenteken = deel1 + deel2 + deel3 + deel4 + "%";
-										if (DutchLicensePlateFormatChecker.matchValid(kenteken)) {
-											System.out.println("Zoek string naar RDW: " + kenteken);
-											ResponseEntity<String> response = RdwRequestData.getData(kenteken);
-											if (response.getStatusCode() == HttpStatus.OK) {
-												RdwResponse[] voertuigen = Converter.fromJsonString(response.getBody());
-												System.out.println("Aantal gevonden: " + voertuigen.length
-														+ " met zoekvraag: " + kenteken);
-												for (final RdwResponse voertuig : voertuigen) {
-													String jsonString = new JSONObject()
-															.put("Kenteken", voertuig.getKenteken())
-															.put("Merk", voertuig.getMerk())
-															.put("Handelsbenaming", voertuig.getHandelsbenaming())
-															.put("EersteKleur", voertuig.getEersteKleur())
-															.put("TweedeKleur", voertuig.getTweedeKleur())
-															.put("DatumEersteToelating",
-																	voertuig.getDatumEersteToelating())
-															.put("Voertuigsoort", voertuig.getVoertuigsoort())
-															.put("Inrichting", voertuig.getInrichting())
-															.put("message",
-																	voertuig.getKenteken() + " " + voertuig.getMerk()
-																			+ " " + voertuig.getHandelsbenaming() + " "
-																			+ voertuig.getEersteKleur() + " "
-																			+ voertuig.getTweedeKleur() + " "
-																			+ voertuig.getDatumEersteToelating() + " "
-																			+ voertuig.getVoertuigsoort() + " "
-																			+ voertuig.getInrichting())
-															.toString();
-													IndexDelete.deleteRdwEntry(voertuig.getKenteken());
-													IndexPost.postRdwEntry(jsonString, voertuig.getKenteken());
+			String kenteken = "";
+			try {
+				if (startPoint1 | deel1.equalsIgnoreCase(startPlate.substring(0, 1))) {
+					startPoint1 = true;
+					for (String deel2 : letterLijst) {
+						if (startPoint2 | deel2.equalsIgnoreCase(startPlate.substring(1, 2))) {
+							startPoint2 = true;
+							for (String deel3 : letterLijst) {
+								if (startPoint3 | deel3.equalsIgnoreCase(startPlate.substring(2, 3))) {
+									startPoint3 = true;
+									for (String deel4 : letterLijst) {
+										if (startPoint4 | deel4.equalsIgnoreCase(startPlate.substring(3, 4))) {
+											startPoint4 = true;
+											kenteken = deel1 + deel2 + deel3 + deel4 + "%";
+											this.setStartplate(kenteken.substring(0, 3) + "BB");
+											if (DutchLicensePlateFormatChecker.matchValid(kenteken)) {
+												System.out.println("Zoek string naar RDW: " + kenteken);
+												ResponseEntity<String> response = RdwRequestData.getData(kenteken);
+												if (response.getStatusCode() == HttpStatus.OK) {
+													RdwResponse[] voertuigen = Converter
+															.fromJsonString(response.getBody());
+													System.out.println("Aantal gevonden: " + voertuigen.length
+															+ " met zoekvraag: " + kenteken);
+													for (final RdwResponse voertuig : voertuigen) {
+														String jsonString = new JSONObject()
+																.put("Kenteken", voertuig.getKenteken())
+																.put("Merk", voertuig.getMerk())
+																.put("Handelsbenaming", voertuig.getHandelsbenaming())
+																.put("EersteKleur", voertuig.getEersteKleur())
+																.put("TweedeKleur", voertuig.getTweedeKleur())
+																.put("DatumEersteToelating",
+																		voertuig.getDatumEersteToelating())
+																.put("Voertuigsoort", voertuig.getVoertuigsoort())
+																.put("Inrichting", voertuig.getInrichting())
+																.put("message",
+																		voertuig.getKenteken() + " "
+																				+ voertuig.getMerk() + " "
+																				+ voertuig.getHandelsbenaming() + " "
+																				+ voertuig.getEersteKleur() + " "
+																				+ voertuig.getTweedeKleur() + " "
+																				+ voertuig.getDatumEersteToelating()
+																				+ " " + voertuig.getVoertuigsoort()
+																				+ " " + voertuig.getInrichting())
+																.toString();
+														IndexDelete.deleteRdwEntry(voertuig.getKenteken());
+														IndexPost.postRdwEntry(jsonString, voertuig.getKenteken());
+													}
 												}
 											}
 										}
@@ -94,6 +104,8 @@ public class RdwsyncApplication implements CommandLineRunner {
 						}
 					}
 				}
+			} catch (Exception e) {
+				System.out.println("Error: " + kenteken + " " + e);
 			}
 		}
 	}
