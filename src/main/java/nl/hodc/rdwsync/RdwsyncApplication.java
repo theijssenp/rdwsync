@@ -25,6 +25,11 @@ public class RdwsyncApplication implements CommandLineRunner {
 		return myAppProperties.getStartplate();
 	}
 
+	@GetMapping("/uitsluiten")
+	public String getUitsluiten() {
+		return myAppProperties.getUitsluiten();
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(RdwsyncApplication.class, args);
 	}
@@ -36,7 +41,7 @@ public class RdwsyncApplication implements CommandLineRunner {
 		Boolean startPoint2 = false;
 		Boolean startPoint3 = false;
 		Boolean startPoint4 = false;
-		List<String> letterLijst = ListCreator.getList();
+		List<String> letterLijst = ListCreator.getList(this.getUitsluiten());
 		System.out.println("Start Plate: " + startPlate);
 		for (String deel1 : letterLijst) {
 			if (startPoint1 | deel1.equalsIgnoreCase(startPlate.substring(0, 1))) {
