@@ -11,6 +11,7 @@ public class AppProperties {
 
     private String startplate;
     private String uitsluiten;
+    private String esserverip;
 
     public AppProperties() {
     }
@@ -68,6 +69,14 @@ public class AppProperties {
 
     public void setStartplate(String startplate) {
         this.startplate = startplate;
+    }
+
+    public String getEsserverip() {
+        return esserverip;
+    }
+
+    public void setEsserverip(String esserverip) {
+        this.esserverip = esserverip;
     }
 
 

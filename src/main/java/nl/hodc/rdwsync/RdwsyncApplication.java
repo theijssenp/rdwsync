@@ -25,13 +25,14 @@ public class RdwsyncApplication implements CommandLineRunner {
 		return myAppProperties.getStartplate();
 	}
 
-	public void setStartplate(String kenteken) {
-		myAppProperties.setStartplate(kenteken);
-	}
-
 	@GetMapping("/uitsluiten")
 	public String getUitsluiten() {
 		return myAppProperties.getUitsluiten();
+	}
+
+	@GetMapping("/esserverip")
+	public String getEsserverip() {
+		return myAppProperties.getEsserverip();
 	}
 
 	public static void main(String[] args) {
@@ -41,6 +42,7 @@ public class RdwsyncApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		String startPlate = this.getStartplate();
+		String esserverip = this.getEsserverip();
 		Boolean startPoint1 = false;
 		Boolean startPoint2 = false;
 		Boolean startPoint3 = false;
@@ -62,7 +64,6 @@ public class RdwsyncApplication implements CommandLineRunner {
 										if (startPoint4 | deel4.equalsIgnoreCase(startPlate.substring(3, 4))) {
 											startPoint4 = true;
 											kenteken = deel1 + deel2 + deel3 + deel4 + "%";
-											this.setStartplate(kenteken.substring(0, 3) + "BB");
 											if (DutchLicensePlateFormatChecker.matchValid(kenteken)) {
 												System.out.println("Zoek string naar RDW: " + kenteken);
 												ResponseEntity<String> response = RdwRequestData.getData(kenteken);
@@ -92,8 +93,23 @@ public class RdwsyncApplication implements CommandLineRunner {
 																				+ " " + voertuig.getVoertuigsoort()
 																				+ " " + voertuig.getInrichting())
 																.toString();
-														IndexDelete.deleteRdwEntry(voertuig.getKenteken());
-														IndexPost.postRdwEntry(jsonString, voertuig.getKenteken());
+														// IndexDelete.deleteRdwEntry(voertuig.getKenteken(), esserverip
+														// );
+														IndexPost.postRdwEntry(jsonString, voertuig.getKenteken(),
+																esserverip);
+														String jsonString2 = new JSONObject()
+																.put("herkomst", "initieel")
+																.put("zoekterm", voertuig.getMerk()).toString().toLowerCase();
+
+														ZoektermPost.postZoektermEntry(jsonString2, voertuig.getMerk().toLowerCase(),
+																esserverip);
+														String jsonString3 = new JSONObject()
+																.put("herkomst", "initieel")
+																.put("zoekterm", voertuig.getEersteKleur()).toString().toLowerCase();
+
+														ZoektermPost.postZoektermEntry(jsonString3,
+																voertuig.getEersteKleur().toLowerCase(), esserverip);
+
 													}
 												}
 											}
