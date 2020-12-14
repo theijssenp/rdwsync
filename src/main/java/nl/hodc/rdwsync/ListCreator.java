@@ -8,7 +8,7 @@ public class ListCreator {
         List<String> lijstwaarde = new ArrayList<String>();
 
         if (!uitsluiten.contentEquals("Y")){
-            lijstwaarde.add("A"); //Koninklijk Huis
+          //  lijstwaarde.add("A"); //Koninklijk Huis
             lijstwaarde.add("C"); // Corps Diplomatiek
             lijstwaarde.add("M"); // Motorfietsen
             lijstwaarde.add("W"); // Caravan en Aanhangwagen

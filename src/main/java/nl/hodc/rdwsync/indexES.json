@@ -1,51 +1,90 @@
+DELETE rdw
+
+PUT rdw
+
+PUT rdw/_mapping 
 {
-    "rdw": {
-        "settings": {
-            "index": {
-                "number_of_shards": "5",
-                "blocks": {
-                    "read_only_allow_delete": "false"
-                },
-                "provided_name": "rdw",
-                "creation_date": "1550561491046",
-                "analysis": {
-                    "filter": {
-                        "KentekenFilter": {
-                            "type": "edge_ngram",
-                            "min_gram": "1",
-                            "max_gram": "20"
-                        },
-                        "MessageFilter": {
-                            "type": "edge_ngram",
-                            "min_gram": "1",
-                            "max_gram": "20"
-                        }
-                    },
-                    "analyzer": {
-                        "KentekenAnalyzer": {
-                            "filter": [
-                                "lowercase",
-                                "KentekenFilter"
-                            ],
-                            "type": "custom",
-                            "tokenizer": "standard"
-                        },
-                        "MessageAnalyzer": {
-                            "filter": [
-                                "lowercase",
-                                "MessageFilter"
-                            ],
-                            "type": "custom",
-                            "tokenizer": "standard"
-                        }
-                    }
-                },
-                "number_of_replicas": "1",
-                "uuid": "bylYvx17T5KN4E-yDkmXRA",
-                "version": {
-                    "created": "6060099"
-                }
-            }
-        }
+"properties": {
+        "Kenteken": { "type": "text" },
+        "Merk": { "type": "text" },
+        "Handelsbenaming": { "type": "text" },
+        "EersteKleur": { "type": "text" },
+        "TweedeKleur": { "type": "text" },
+        "DatumEersteToelating": { "type": "text" },
+        "Voertuigsoort": { "type": "text" },
+        "Inrichting": { "type": "text" },
+        "message": { "type": "text" }
+      }
+}
+
+DELETE zoektermen
+
+PUT zoektermen
+
+PUT zoektermen/_mapping 
+{
+"properties": {
+        "zoekterm": { "type": "text" },
+        "herkomst": { "type": "text" }
+      }
+}
+
+
+PUT /zoektermen/_doc/bmw
+{
+  "zoekterm": "bmw",
+  "herkomst": "handmatig"
+}
+
+PUT /zoektermen/_doc/groen
+{
+  "zoekterm": "groen",
+  "herkomst": "handmatig"
+}
+
+GET zoektermen/_search
+{
+    "query": {
+        "match_all": {}
     }
 }
+
+GET rdw/_search
+{
+    "query": {
+        "match_all": {}
+    }
+}
+
+GET rdw/_search
+ {
+    "from": 0,
+    "size": 10,
+    "query": {
+      "bool": {
+        "should": [
+          {
+            "match": {
+              "message": {
+                "query": "opel"
+              }
+            }
+          },
+          {
+            "bool": {
+              "should": [
+                {
+                  "wildcard": {
+                    "Kenteken": "*"
+                  }
+                }
+              ],
+              "boost": 40
+            }
+          }
+        ]
+      }
+    }
+  }
+
+GET /_cat/indices

@@ -95,20 +95,20 @@ public class RdwsyncApplication implements CommandLineRunner {
 																.toString();
 														// IndexDelete.deleteRdwEntry(voertuig.getKenteken(), esserverip
 														// );
-														IndexPost.postRdwEntry(jsonString, voertuig.getKenteken(),
-																esserverip);
-														String jsonString2 = new JSONObject()
-																.put("herkomst", "initieel")
-																.put("zoekterm", voertuig.getMerk()).toString().toLowerCase();
+														// IndexPost.postRdwEntry(jsonString, voertuig.getKenteken(),
+														// 		esserverip);
+														// String jsonString2 = new JSONObject()
+														// 		.put("herkomst", "initieel")
+														// 		.put("zoekterm", voertuig.getMerk()).toString().toLowerCase();
 
-														ZoektermPost.postZoektermEntry(jsonString2, voertuig.getMerk().toLowerCase(),
-																esserverip);
-														String jsonString3 = new JSONObject()
-																.put("herkomst", "initieel")
-																.put("zoekterm", voertuig.getEersteKleur()).toString().toLowerCase();
+														// ZoektermPost.postZoektermEntry(jsonString2, voertuig.getMerk().toLowerCase(),
+														// 		esserverip);
+														// String jsonString3 = new JSONObject()
+														// 		.put("herkomst", "initieel")
+														// 		.put("zoekterm", voertuig.getEersteKleur()).toString().toLowerCase();
 
-														ZoektermPost.postZoektermEntry(jsonString3,
-																voertuig.getEersteKleur().toLowerCase(), esserverip);
+														// ZoektermPost.postZoektermEntry(jsonString3,
+														// 		voertuig.getEersteKleur().toLowerCase(), esserverip);
 
 													}
 												}
