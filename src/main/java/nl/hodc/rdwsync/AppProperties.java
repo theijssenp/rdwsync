@@ -13,6 +13,7 @@ public class AppProperties {
     private String uitsluiten;
     private String esserverip;
     private String csv;
+    private String csvstartrow;
 
     public AppProperties() {
     }
@@ -86,6 +87,14 @@ public class AppProperties {
 
     public void setCsv(String csv) {
         this.csv = csv;
+    }
+
+    public String getCsvstartrow() {
+        return csvstartrow;
+    }
+
+    public void setCsvstartrow(String csvstartrow) {
+        this.csvstartrow = csvstartrow;
     }
 
 

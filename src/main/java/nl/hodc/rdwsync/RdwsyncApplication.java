@@ -28,6 +28,11 @@ public class RdwsyncApplication implements CommandLineRunner {
 		return myAppProperties.getStartplate();
 	}
 
+	@GetMapping("/csvstartrow")
+	public String getCsvStartRow() {
+		return myAppProperties.getCsvstartrow();
+	}
+
 	@GetMapping("/csv")
 	public String getCsv() {
 		return myAppProperties.getCsv();
@@ -65,27 +70,19 @@ public class RdwsyncApplication implements CommandLineRunner {
 				String waarde = rowScanner.next();
 				i++;
 				if (i == 1) {
-					// System.out.println("Set kenteken: ");
 					voertuig.setKenteken(waarde);
-					// System.out.println("Get kenteken: " + voertuig.getKenteken());
 				}
 
 				if (i == 3) {
-					// System.out.println("Set merk: ");
 					voertuig.setMerk(waarde);
-					// System.out.println("Get merk: " + voertuig.getMerk());
 				}
 
 				if (i == 4) {
-					// System.out.println("Set handelsbenaming: ");
 					voertuig.setHandelsbenaming(waarde);
-					// System.out.println("Get Handelsbenaming: " + voertuig.getHandelsbenaming());
 				}
 
 				if (i == 10) {
-					// System.out.println("Set eerste kleur: ");
 					voertuig.setEersteKleur(waarde);
-					// System.out.println("Get EersteKleur: " + voertuig.getEersteKleur());
 				}
 
 				if (i == 11) {
@@ -93,23 +90,16 @@ public class RdwsyncApplication implements CommandLineRunner {
 				}
 				if (i == 20) {
 					voertuig.setDatumEersteToelating(waarde);
-					// System.out.println("Get DatumEersteToelating: " +
-					// voertuig.getDatumEersteToelating());
 				}
 
 				if (i == 2) {
 					voertuig.setVoertuigsoort(waarde);
-					// System.out.println("Get Voertuigsoort: " + voertuig.getVoertuigsoort());
 				}
 				if (i == 8) {
 					voertuig.setInrichting(waarde);
-					// System.out.println("Get Inrichting: " + voertuig.getInrichting());
 				}
-
 			}
-
 			IndexPost.postRdwEntry(voertuig, voertuig.getKenteken(), esserverip);
-
 		}
 	}
 
@@ -128,14 +118,36 @@ public class RdwsyncApplication implements CommandLineRunner {
 				while (scanner.hasNextLine()) {
 					i++;
 					String line = scanner.nextLine();
-					// Header overslaan
-					if (i > 260) {
+					// Bepalen start row
+					int csvstartrow;
+					try {
+						csvstartrow = Integer.parseInt(this.getCsvStartRow());
+					} catch (Exception e) {
+						csvstartrow = 1;
+					}
+
+					if (i > csvstartrow) {
 						try {
 							putRecordToIndex(line, esserverip);
 						} catch (Exception e) {
-							System.out.println("Probleem met " + line.substring(0, 6));
-						}
+							System.out.println("WARNING: Probleem met " + line.substring(0, 6));
+							String kenteken = line.substring(0, 6);
+							ResponseEntity<String> response = RdwRequestData.getData(kenteken);
+							if (response.getStatusCode() == HttpStatus.OK) {
+								RdwResponse[] voertuigen = Converter.fromJsonString(response.getBody());
+								System.out.println(
+										"Online gevonden: " + voertuigen.length + " met zoekvraag: " + kenteken);
+								for (final RdwResponse voertuig : voertuigen) {
+									try {
+										IndexPost.postRdwEntry(voertuig, voertuig.getKenteken(), esserverip);
+									} catch (Exception e2) {
+										System.out
+												.println("ERROR: " + line.substring(0, 6) + " Kenteken niet overgezet");
+									}
 
+								}
+							}
+						}
 					}
 					if (mod(i, 10000)) {
 						System.out.println("Aantal verwerkt: " + i);
