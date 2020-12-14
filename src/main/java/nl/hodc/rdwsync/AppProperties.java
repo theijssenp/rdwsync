@@ -12,6 +12,7 @@ public class AppProperties {
     private String startplate;
     private String uitsluiten;
     private String esserverip;
+    private String csv;
 
     public AppProperties() {
     }
@@ -77,6 +78,14 @@ public class AppProperties {
 
     public void setEsserverip(String esserverip) {
         this.esserverip = esserverip;
+    }
+
+    public String getCsv() {
+        return csv;
+    }
+
+    public void setCsv(String csv) {
+        this.csv = csv;
     }
 
 
