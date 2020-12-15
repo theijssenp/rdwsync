@@ -37,3 +37,4 @@ out/
 
 Open_Data_RDW__Gekentekende_voertuigen.csv
 .DS_Store
+bin/main/nl/hodc/rdwsync/RdwResponse.class

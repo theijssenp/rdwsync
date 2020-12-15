@@ -68,6 +68,7 @@ public class RdwResponse {
     private String aanhangwagenAutonoomGeremd;
     private String aanhangwagenMiddenasGeremd;
     private String aantalStaanplaatsen;
+    private String afwijkendeMaximumSnelheid;
 
     @JsonProperty("kenteken")
     public String getKenteken() {
@@ -87,6 +88,16 @@ public class RdwResponse {
     @JsonProperty("aantal_cilinders")
     public void setAantalCilinders(String value) {
         this.aantalCilinders = value;
+    }
+
+    @JsonProperty("afwijkende_maximum_snelheid")
+    public String getAfwijkendeMaximumSnelheid() {
+        return afwijkendeMaximumSnelheid;
+    }
+
+    @JsonProperty("afwijkende_maximum_snelheid")
+    public void setAfwijkendeMaximumSnelheid(String value) {
+        this.afwijkendeMaximumSnelheid = value;
     }
 
     @JsonProperty("aantal_staanplaatsen")
