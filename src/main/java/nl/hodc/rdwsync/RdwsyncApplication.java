@@ -24,8 +24,6 @@ public class RdwsyncApplication implements CommandLineRunner {
 		SpringApplication.run(RdwsyncApplication.class, args);
 	}
 
-	private static final String COMMA_DELIMITER = ",";
-
 	@Autowired
 	AppProperties myAppProperties;
 
@@ -60,6 +58,7 @@ public class RdwsyncApplication implements CommandLineRunner {
 		String esserverip = this.getEsserverip();
 		if (this.getCsv().equalsIgnoreCase(yes)) {
 			System.out.println("Start CSV: " + this.getCsv());
+			 /// Open_Data_RDW__Gekentekende_voertuigen ///
 			try (Scanner scanner = new Scanner(new File("Open_Data_RDW__Gekentekende_voertuigen.csv"));) {
 				int i = 0;
 				while (scanner.hasNextLine()) {
@@ -188,44 +187,15 @@ public class RdwsyncApplication implements CommandLineRunner {
 
 	private static void putRecordToIndex(String line, String esserverip) {
 		RdwResponse voertuig = new RdwResponse();
-		// System.out.println("Start rowscanner: ");
-		try (Scanner rowScanner = new Scanner(line)) {
-			rowScanner.useDelimiter(COMMA_DELIMITER);
-			int i = 0;
-			while (rowScanner.hasNext()) {
-				String waarde = rowScanner.next();
-				i++;
-				if (i == 1) {
-					voertuig.setKenteken(waarde);
-				}
-
-				if (i == 3) {
-					voertuig.setMerk(waarde);
-				}
-
-				if (i == 4) {
-					voertuig.setHandelsbenaming(waarde);
-				}
-
-				if (i == 10) {
-					voertuig.setEersteKleur(waarde);
-				}
-
-				if (i == 11) {
-					voertuig.setTweedeKleur(waarde);
-				}
-				if (i == 20) {
-					voertuig.setDatumEersteToelating(waarde);
-				}
-
-				if (i == 2) {
-					voertuig.setVoertuigsoort(waarde);
-				}
-				if (i == 8) {
-					voertuig.setInrichting(waarde);
-				}
-			}
-			IndexPost.postRdwEntry(voertuig, voertuig.getKenteken(), esserverip);
-		}
+		List<String> kenmerken = CSVUtils.parseLine(line);
+		voertuig.setKenteken(kenmerken.get(0));
+		voertuig.setMerk(kenmerken.get(2));
+		voertuig.setHandelsbenaming(kenmerken.get(3));
+		voertuig.setEersteKleur(kenmerken.get(9));
+		voertuig.setTweedeKleur(kenmerken.get(10));
+		voertuig.setDatumEersteToelating(kenmerken.get(19));
+		voertuig.setVoertuigsoort(kenmerken.get(1));
+		voertuig.setInrichting(kenmerken.get(7));
+		IndexPost.postRdwEntry(voertuig, voertuig.getKenteken(), esserverip);
 	}
 }
