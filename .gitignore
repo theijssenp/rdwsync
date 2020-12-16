@@ -39,3 +39,5 @@ Open_Data_RDW__Gekentekende_voertuigen.csv
 .DS_Store
 bin/main/nl/hodc/rdwsync/RdwResponse.class
 src/main/java/nl/hodc/rdwsync/RdwsyncApplication.java
+bin/main/nl/hodc/rdwsync/CSVUtils.class
+bin/main/nl/hodc/rdwsync/RdwRequestLastPlate.class
