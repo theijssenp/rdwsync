@@ -1,3 +1,5 @@
+## Onder vind je de wijze van het aanmaken van de ES indexen.
+
 DELETE rdw
 
 PUT rdw
@@ -56,6 +58,7 @@ GET rdw/_search
     }
 }
 
+
 GET rdw/_search
  {
     "from": 0,
@@ -88,3 +91,4 @@ GET rdw/_search
   }
 
 GET /_cat/indices
+

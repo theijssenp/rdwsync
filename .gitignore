@@ -1,13 +1,9 @@
 HELP.md
 .gradle
 build/
+bin/*
 .class
-bin/main/nl/hodc/rdwsync/RdwsyncApplication.class
-bin/main/nl/hodc/rdwsync/IndexPost.class
-bin/main/nl/hodc/rdwsync/IndexDelete.class
-bin/main/nl/hodc/rdwsync/AppProperties.class
-bin/main/nl/hodc/rdwsync/ZoektermPost.class
-bin/main/nl/hodc/rdwsync/ListCreator.class
+
 
 ### STS ###
 .apt_generated
@@ -37,19 +33,4 @@ out/
 
 Open_Data_RDW__Gekentekende_voertuigen.csv
 .DS_Store
-bin/main/nl/hodc/rdwsync/RdwResponse.class
-src/main/java/nl/hodc/rdwsync/RdwsyncApplication.java
-bin/main/nl/hodc/rdwsync/CSVUtils.class
-bin/main/nl/hodc/rdwsync/RdwRequestLastPlate.class
-bin/main/nl/hodc/rdwsync/es/IndexDelete.class
-bin/main/nl/hodc/rdwsync/es/IndexPost.class
-bin/main/nl/hodc/rdwsync/es/ZoektermPost.class
-bin/main/nl/hodc/rdwsync/rdw/RdwRequestData.class
-bin/main/nl/hodc/rdwsync/rdw/RdwRequestLastPlate.class
-bin/main/nl/hodc/rdwsync/rdw/RdwResponse.class
-bin/main/nl/hodc/rdwsync/tools/AppProperties.class
-bin/main/nl/hodc/rdwsync/tools/Converter.class
-bin/main/nl/hodc/rdwsync/tools/Converter$1.class
-bin/main/nl/hodc/rdwsync/tools/CSVUtils.class
-bin/main/nl/hodc/rdwsync/tools/DutchLicensePlateFormatChecker.class
-bin/main/nl/hodc/rdwsync/tools/ListCreator.class
+
