@@ -1,4 +1,4 @@
-package nl.hodc.rdwsync;
+package nl.hodc.rdwsync.tools;
 
 import java.util.Objects;
 

@@ -15,6 +15,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import nl.hodc.rdwsync.es.IndexPost;
+import nl.hodc.rdwsync.rdw.RdwRequestData;
+import nl.hodc.rdwsync.rdw.RdwRequestLastPlate;
+import nl.hodc.rdwsync.rdw.RdwResponse;
+import nl.hodc.rdwsync.tools.ListCreator;
+import nl.hodc.rdwsync.tools.AppProperties;
+import nl.hodc.rdwsync.tools.CSVUtils;
+import nl.hodc.rdwsync.tools.Converter;
+import nl.hodc.rdwsync.tools.DutchLicensePlateFormatChecker;
+
 @SpringBootApplication
 @RequestMapping("app")
 
@@ -54,9 +64,9 @@ public class RdwsyncApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		String yes = "Y";
+
 		String esserverip = this.getEsserverip();
-		if (this.getCsv().equalsIgnoreCase(yes)) {
+		if (this.getCsv().equalsIgnoreCase("Y")) {
 			System.out.println("Start CSV: " + this.getCsv());
 			 /// Open_Data_RDW__Gekentekende_voertuigen ///
 			try (Scanner scanner = new Scanner(new File("Open_Data_RDW__Gekentekende_voertuigen.csv"));) {
@@ -106,6 +116,11 @@ public class RdwsyncApplication implements CommandLineRunner {
 			}
 		} else {
 			String startPlate = this.getStartplate();
+
+			startPlate = RdwRequestLastPlate.getLastPlate();
+			System.out.println(startPlate);
+			startPlate = startPlate.substring(0,1)+0+0+0+startPlate.substring(4, 5);
+			System.out.println(startPlate);
 			Boolean startPoint1 = false;
 			Boolean startPoint2 = false;
 			Boolean startPoint3 = false;

@@ -1,28 +1,13 @@
-package nl.hodc.rdwsync;
+package nl.hodc.rdwsync.tools;
 
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
 
 public class CSVUtils {
 
     private static final char DEFAULT_SEPARATOR = ',';
     private static final char DEFAULT_QUOTE = '"';
-
-    public static void main(String[] args) throws Exception {
-
-        String csvFile = "problem.csv";
-
-        Scanner scanner = new Scanner(new File(csvFile));
-        while (scanner.hasNext()) {
-            List<String> line = parseLine(scanner.nextLine());
-            System.out.println("Kenteken= [" + line.get(0) + "], Voetuigsoort= [" + line.get(1) + "] , Model=[" + line.get(2) + "] , Handelsnaam= ["+ line.get(3) + "] een datum ["+ line.get(4) + "]  en nog iets  ["+ line.get(5) + "]  en nog wat ["+ line.get(6) + "]");
-        }
-        scanner.close();
-
-    }
 
     public static List<String> parseLine(String cvsLine) {
         return parseLine(cvsLine, DEFAULT_SEPARATOR, DEFAULT_QUOTE);
@@ -37,7 +22,7 @@ public class CSVUtils {
         List<String> result = new ArrayList<>();
 
         //if empty, return!
-        if (cvsLine == null && cvsLine.isEmpty()) {
+        if (cvsLine == null ) {
             return result;
         }
 

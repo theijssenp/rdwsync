@@ -1,4 +1,4 @@
-package nl.hodc.rdwsync;
+package nl.hodc.rdwsync.rdw;
 
 import java.util.Collections;
 
@@ -10,30 +10,21 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-public class RdwRequestLastPlate {
-
-    public static void main(String[] args) throws Exception {
-
-        String out = getLastPlate();
-        System.out.println(out);
-    }
-
-    public static String getLastPlate() {
+public class RdwRequestData {
+    public static ResponseEntity<String> getData(String kenteken) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
 
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        String resourceURL = "https://www.rdw.nl/restapi/lukapi/get?vehicle=1";
+
+        String resourceURL = "https://opendata.rdw.nl/resource/m9d7-ebf2.json?$select=*&$order=kenteken&$where=kenteken+like+'"
+                + kenteken + "'";
 
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         ResponseEntity<String> response = restTemplate.exchange(resourceURL, HttpMethod.GET, entity, String.class);
         if (response.getStatusCode() != HttpStatus.OK) {
-            System.out.println("Status request niet OK");
+            System.out.println("Status request niet OK bij " + kenteken);
         }
-        String jsonshit = response.getBody();
-        jsonshit = jsonshit.replace("[{\"vehicle\":\"1\",\"code\":", "");
-        jsonshit = jsonshit.replace("}]", "");
-        jsonshit = jsonshit.replace("\"", "");
-        return jsonshit;
+        return response;
     }
 }

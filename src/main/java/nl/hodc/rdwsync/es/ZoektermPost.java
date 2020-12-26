@@ -1,4 +1,4 @@
-package nl.hodc.rdwsync;
+package nl.hodc.rdwsync.es;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

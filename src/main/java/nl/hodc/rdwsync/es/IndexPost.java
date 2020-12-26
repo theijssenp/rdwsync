@@ -1,4 +1,4 @@
-package nl.hodc.rdwsync;
+package nl.hodc.rdwsync.es;
 
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
@@ -7,6 +7,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+
+import nl.hodc.rdwsync.rdw.RdwResponse;
 
 public class IndexPost {
 

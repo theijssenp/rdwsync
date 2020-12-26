@@ -1,4 +1,4 @@
-package nl.hodc.rdwsync;
+package nl.hodc.rdwsync.tools;
 
 // Converter.java
 
@@ -19,6 +19,9 @@ package nl.hodc.rdwsync;
 import java.io.IOException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+
+import nl.hodc.rdwsync.rdw.RdwResponse;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 // import java.util.*;
